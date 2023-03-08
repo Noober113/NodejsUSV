@@ -18,6 +18,16 @@ let getHomePage = async (req, res) => {
 
 }
 
+let test = (req, res) => {
+    return res.render('test.ejs');
+}
+
+let testPost = async (req, res) => {
+    let message = await CRUDservices.createStatus(req.body);
+    console.log(body.value1);
+    return res.send('Vào db xem đi xong r đó');
+}
+
 let getCRUD = (req, res) => {
     return res.render('crud.ejs');
 }
@@ -83,4 +93,6 @@ module.exports = {
     getEditCRUD: getEditCRUD,
     putCRUD: putCRUD,
     deleteCRUD: deleteCRUD,
+    test: test,
+    testPost: testPost,
 }

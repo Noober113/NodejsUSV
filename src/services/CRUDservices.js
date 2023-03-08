@@ -6,6 +6,21 @@ import db from "../models/index";
 
 const salt = bcrypt.genSaltSync(10);
 
+let createStatus = async (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await db.point_test.create({
+                value1: data.value1,
+                value2: data.value2,
+                value3: data.value3,
+            })
+            resolve("Vào db xem đi xong r đó")
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 let createNewUser = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -123,4 +138,5 @@ module.exports = {
     getUserInfoById: getUserInfoById,
     updateUserData: updateUserData,
     deleteUserById: deleteUserById,
+    createStatus: createStatus,
 }

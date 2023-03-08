@@ -1,0 +1,56 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test nè</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <form action="/test-post" method="post">
+                <div class="form-row">
+                    <div class="col-12 mt3">Test send event</div>
+                    <div class="form-group col-md-6">
+                        <label for="Latitude">Latitude</label>
+                        <input type="text" class="form-control" id="Latitude" placeholder="value1" name="value1">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="Longitude">Longitude</label>
+                        <input type="text" class="form-control" id="Longitude" placeholder="value2" name="value2">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="Status">Status</label>
+                        <select id="Status" class="form-control" name="value3">
+                            <option value="0">Start = 0</option>
+                            <option value="1">Stop = 1</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-outline-dark">Bấm zô đây nè</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
