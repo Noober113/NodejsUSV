@@ -103,7 +103,7 @@ let createNewUser = (data) => {
             if (check === true) {
                 resolve({
                     errCode: 1,
-                    message: 'Your email is exist, try another email',
+                    errMessage: 'Your email is exist, try another email',
                 })
             } else {
                 let hassPasswordFromBycript = await hashUserPassword(data.password);
@@ -118,7 +118,7 @@ let createNewUser = (data) => {
                 });
                 resolve({
                     errCode: 0,
-                    message: 'ok',
+                    errMessage: 'ok',
                 })
             }
 
