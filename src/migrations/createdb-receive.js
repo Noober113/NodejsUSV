@@ -10,7 +10,7 @@
 //         timeToStop: DataTypes.DATE,
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('receive', {
+        await queryInterface.createTable('receives', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -58,6 +58,6 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('receive');
+        await queryInterface.dropTable('receives');
     }
 };

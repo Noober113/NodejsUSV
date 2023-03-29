@@ -2,6 +2,7 @@ import express from "express";
 import res from "express/lib/response";
 import homecontroller from "../controller/homecontroller";
 import usercontroller from "../controller/usercontroller";
+import espcontroller from "../controller/espcontroller"
 
 let router = express.Router();
 
@@ -16,13 +17,22 @@ let initWebRoutes = (app) => {
     router.post('/put-crud', homecontroller.putCRUD);
     router.get('/delete-crud', homecontroller.deleteCRUD);
 
-
+    //-----------------------------------------------------------------//
 
     router.post('/api/login', usercontroller.handleLogin);
     router.get('/api/get-all-users', usercontroller.handleGetAllUser);
     router.post('/api/create-user', usercontroller.handleCreateNewUser);
     router.put('/api/edit-user', usercontroller.handleEditUser);
     router.delete('/api/delete-user', usercontroller.handleDeleteUser);
+    router.post('/api/create-coor', usercontroller.handleCreateCoor);
+    router.get('/api/get-coor', usercontroller.handleGetAllCoor);
+
+
+    //-----------------------------------------------------------------//
+
+    router.get('/api/esp/get-all-coor', espcontroller.handleGetCoor);
+    router.post('/api/esp/post-coor', espcontroller.handlePostCoor);
+
 
     return app.use("/", router);
 };

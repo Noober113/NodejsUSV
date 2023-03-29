@@ -67,10 +67,30 @@ let handleDeleteUser = async (req, res) => {
     return res.status(200).json(message);
 }
 
+let handleCreateCoor = async (req, res) => {
+    let message = await userServices.createCoor(req.body);
+    return res.status(200).json(message);
+}
+
+let handleGetAllCoor = async (req, res) => {
+
+
+    let users = await userServices.getAllCoor();
+
+    return res.status(200).json({
+        errCode: 0,
+        message: 'ok',
+        users
+
+    })
+}
+
 module.exports = {
     handleLogin: handleLogin,
     handleGetAllUser: handleGetAllUser,
     handleCreateNewUser: handleCreateNewUser,
     handleEditUser: handleEditUser,
     handleDeleteUser: handleDeleteUser,
+    handleCreateCoor: handleCreateCoor,
+    handleGetAllCoor: handleGetAllCoor,
 }

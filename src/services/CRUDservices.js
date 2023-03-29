@@ -96,7 +96,7 @@ let updateUserData = (data) => {
             }
             let user = await db.User.findOne({
                 where: { id: data.id },
-                // raw: true,
+                raw: false,
             })
             if (user) {
                 user.fullName = data.fullName;

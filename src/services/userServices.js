@@ -200,11 +200,48 @@ let updateUserData = (data) => {
                     errCode: 1,
                     errMessage: 'User not found',
                 });
-            }
+            };
         } catch (e) {
             reject(e)
         }
 
+    })
+}
+
+let createCoor = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await db.point_test.create({
+                value1: data.lat,
+                value2: data.lng,
+                value3: data.round === "1" ? true : false,
+                // start: data.start === "1" ? true : false,
+                // time: data.time,
+            });
+            resolve({
+                errCode: 0,
+                errMessage: 'ok',
+            })
+
+        } catch (e) {
+            console.log(e)
+        }
+    })
+}
+
+let getAllCoor = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let users = ''
+            users = await db.point_test.findOne({
+                order: [['id', 'DESC']],
+                limit: 1
+            })
+            resolve(users)
+        } catch (e) {
+            console.log(e);
+            // reject(e);
+        }
     })
 }
 
@@ -214,4 +251,6 @@ module.exports = {
     createNewUser: createNewUser,
     deleteUser: deleteUser,
     updateUserData: updateUserData,
+    createCoor: createCoor,
+    getAllCoor: getAllCoor,
 }
