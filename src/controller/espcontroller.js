@@ -1,17 +1,17 @@
 import espServices from '../services/espServices'
 
 let handleGetCoor = async (req, res) => {
-    let id = req.query.id; // all or 1
+    // let id = req.query.id; // all or 1
 
-    if (!id) {
-        return res.status(200).json({
-            errCode: 1,
-            message: 'Missing required parameter!!!!',
-            users: []
-        })
-    }
+    // if (!id) {
+    //     return res.status(200).json({
+    //         errCode: 1,
+    //         message: 'Missing required parameter!!!!',
+    //         users: []
+    //     })
+    // }
 
-    let users = await espServices.getAllCoor(id);
+    let users = await espServices.getAllCoor();
 
     return res.status(200).json({
         errCode: 0,
