@@ -32,6 +32,8 @@ let initWebRoutes = (app) => {
 
     router.get('/api/esp/get-all-coor', espcontroller.handleGetCoor);
     router.post('/api/esp/post-coor', espcontroller.handlePostCoor);
+    router.post('/api/esp/post-video', espcontroller.handlePostVideo);
+
 
 
     return app.use("/", router);

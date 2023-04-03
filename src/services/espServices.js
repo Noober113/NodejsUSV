@@ -1,6 +1,10 @@
 import e from "express";
 import res from "express/lib/response";
 import db from "../models/index";
+const { promisify } = require('util');
+const fs = require('fs');
+const writeFile = promisify(fs.writeFile);
+
 
 let getAllCoor = () => {
     return new Promise(async (resolve, reject) => {
@@ -46,7 +50,13 @@ let createCoor = (lat, lng) => {
     })
 }
 
+const saveVideo = (videoData, callback) => {
+    const video = Buffer.from(videoData, 'base64');
+    fs.writeFile('video.mp4', video, callback);
+};
+
 module.exports = {
     getAllCoor: getAllCoor,
     createCoor: createCoor,
+    saveVideo: saveVideo,
 }
