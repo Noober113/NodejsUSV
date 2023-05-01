@@ -5,7 +5,7 @@ import qs from 'querystring';
 
 
 let handleGetCoor = async (req, res) => {
-    // let id = req.query.id; // all or 1
+    let id = req.query.id; // all or 1
 
     // if (!id) {
     //     return res.status(200).json({
@@ -15,44 +15,39 @@ let handleGetCoor = async (req, res) => {
     //     })
     // }
 
-    let users = await espServices.getAllCoor();
-
-    return res.status(200).json({
-        errCode: 0,
-        message: 'ok',
-        users
-
-    })
+    let users = await espServices.getAllCoor(id);
+    // console.log(users)
+    return res.status(200).send(users)
 }
 
 let handlePostCoor = async (req, res) => {
     let message = await espServices.createCoor(req.query.lat, req.query.lng);
-    return res.status(200).json(message);
+    let users = await espServices.getAllCoor('STT');
+    return res.status(200).json(users);
 }
 
-const handlePostVideo = async (req, res) => {
-    let body = '';
-    req.on('data', chunk => {
-        body += chunk.toString();
-    });
-    req.on('end', () => {
-        const postData = qs.parse(body);
-        const videoData = postData.video;
-        espServices.saveVideo(videoData, (err, result) => {
-            if (err) {
-                console.error(err);
-                res.statusCode = 500;
-                res.end('Error: Could not save video');
-            } else {
-                res.statusCode = 200;
-                res.end('Video saved successfully');
-            }
-        });
-    });
+let handlePostVideo = async (req, res) => {
+    try {
+        const file = req.file;
+        if (!file) {
+            return res.status(400).send('No file uploaded');
+        }
+        await espServices.saveVideo(file);
+        res.send('File uploaded successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error uploading file');
+    }
+};
+
+let handleDeleteCoor = async (req, res) => {
+    let message = await espServices.deleteCoor();
+    return res.status(200).json(message);
 };
 
 module.exports = {
     handleGetCoor: handleGetCoor,
     handlePostCoor: handlePostCoor,
     handlePostVideo: handlePostVideo,
+    handleDeleteCoor: handleDeleteCoor,
 }

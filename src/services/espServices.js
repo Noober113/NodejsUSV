@@ -6,19 +6,32 @@ const fs = require('fs');
 const writeFile = promisify(fs.writeFile);
 
 
-let getAllCoor = () => {
+let getAllCoor = (userId) => {
     return new Promise(async (resolve, reject) => {
         try {
             let users = ''
             let coor = ''
-
-            users = await db.point_test.findAll({
-
-            })
-            for (let i = 0; i < users.length; i++) {
-                coor = coor + users[i].value1 + '*' + users[i].value2 + '/'  //        10.12*12.13/12.23*13.16/v.v..
+            if (userId === 'CO') {
+                users = await db.Send.findAll({
+                })
+                coor = users[0].latitude + '*' + users[0].longitude
+                for (let i = 1; i < users.length; i++) {
+                    coor = coor + '/' + users[i].latitude + '*' + users[i].longitude   //        10.12*12.13/12.23*13.16/v.v..
+                }
             }
 
+            if (userId === 'STT') {
+                users = await db.Send.findOne({
+                    order: [['id', 'DESC']],
+                    // attributes: ['value3']
+                })
+                if (users) {
+                    coor = users.start
+                }
+                else {
+                    coor = 0
+                }
+            }
             resolve(coor)
         } catch (e) {
             console.log(e)
@@ -30,9 +43,9 @@ let getAllCoor = () => {
 let createCoor = (lat, lng) => {
     return new Promise(async (resolve, reject) => {
         try {
-            await db.point_test.create({
-                value1: lat,
-                value2: lng,
+            await db.Receive.create({
+                latitude: lat,
+                longitude: lng,
                 // value3: data.round === "1" ? true : false,
                 // start: data.start === "1" ? true : false,
                 // time: data.time,
@@ -50,13 +63,37 @@ let createCoor = (lat, lng) => {
     })
 }
 
-const saveVideo = (videoData, callback) => {
-    const video = Buffer.from(videoData, 'base64');
-    fs.writeFile('video.mp4', video, callback);
-};
+let saveVideo = async (file) => {
+    const videoPath = path.join(__dirname, '..', 'uploads', file.originalname);
+    await writeFile(videoPath, file.buffer);
+}
+
+let deleteCoor = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let users = await db.Send.findAll()
+            for (let i = 0; i < users.length; i++) {
+                await db.Send.destroy({
+                    where: { id: users[i].id } // Delete each user one by one
+                });
+            }
+
+            resolve({
+                errMessage: 'ok',
+
+            }
+            )
+
+        } catch (e) {
+            reject(e)
+        }
+
+    })
+}
 
 module.exports = {
     getAllCoor: getAllCoor,
     createCoor: createCoor,
     saveVideo: saveVideo,
+    deleteCoor: deleteCoor,
 }

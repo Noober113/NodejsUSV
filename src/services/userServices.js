@@ -211,11 +211,12 @@ let updateUserData = (data) => {
 let createCoor = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            await db.point_test.create({
-                value1: data.lat,
-                value2: data.lng,
-                value3: data.round === "1" ? true : false,
-                // start: data.start === "1" ? true : false,
+            await db.Send.create({
+                latitude: data.lat,
+                longitude: data.lng,
+                // start: data.stt,
+                start: data.stt === "1" ? true : false,
+                round: data.round
                 // time: data.time,
             });
             resolve({
@@ -233,15 +234,74 @@ let getAllCoor = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let users = ''
-            users = await db.point_test.findOne({
+            users = await db.Receive.findOne({
                 order: [['id', 'DESC']],
-                limit: 1
+                limit: 1,
+                attributes: ['latitude', 'longitude']
             })
             resolve(users)
         } catch (e) {
             console.log(e);
             // reject(e);
         }
+    })
+}
+
+let updateStatusData = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await db.Send.update({ start: data.stt }, { where: {} });
+            resolve({
+                errCode: 0,
+                errMessage: 'update success',
+            });
+
+            resolve({
+                errCode: 1,
+                errMessage: 'User not found',
+            });
+
+        } catch (e) {
+            // reject(e)
+            console.log(e)
+        }
+
+    })
+}
+
+let checkQuery = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let check
+            let checkval
+            check = await db.Send.findOne({
+                order: [['id', 'DESC']],
+                // attributes: ['value3']
+            })
+            if (check) {
+                checkval = await db.Send.findAll({
+                    attributes: ['latitude', 'longitude', 'round', 'start']
+                })
+                resolve({
+                    checkval,
+                    errCode: 0,
+                    errMessage: 'update success',
+                });
+            }
+            else {
+                checkval = 0
+                resolve({
+                    checkval,
+                    errCode: 0,
+                    errMessage: 'update success',
+                });
+            }
+
+        } catch (e) {
+            // reject(e)
+            console.log(e)
+        }
+
     })
 }
 
@@ -253,4 +313,6 @@ module.exports = {
     updateUserData: updateUserData,
     createCoor: createCoor,
     getAllCoor: getAllCoor,
+    updateStatusData: updateStatusData,
+    checkQuery: checkQuery,
 }

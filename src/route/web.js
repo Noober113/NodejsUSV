@@ -26,6 +26,9 @@ let initWebRoutes = (app) => {
     router.delete('/api/delete-user', usercontroller.handleDeleteUser);
     router.post('/api/create-coor', usercontroller.handleCreateCoor);
     router.get('/api/get-coor', usercontroller.handleGetAllCoor);
+    router.put('/api/edit-status', usercontroller.handleEditStatus);
+    router.get('/api/query-setting', usercontroller.handleQuery);
+
 
 
     //-----------------------------------------------------------------//
@@ -33,7 +36,7 @@ let initWebRoutes = (app) => {
     router.get('/api/esp/get-all-coor', espcontroller.handleGetCoor);
     router.post('/api/esp/post-coor', espcontroller.handlePostCoor);
     router.post('/api/esp/post-video', espcontroller.handlePostVideo);
-
+    router.post('/api/esp/delete-coor', espcontroller.handleDeleteCoor);
 
 
     return app.use("/", router);

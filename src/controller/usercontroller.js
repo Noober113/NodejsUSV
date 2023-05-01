@@ -85,6 +85,16 @@ let handleGetAllCoor = async (req, res) => {
     })
 }
 
+let handleEditStatus = async (req, res) => {
+    let message = await userServices.updateStatusData(req.body);
+    return res.status(200).json(message)
+}
+
+let handleQuery = async (req, res) => {
+    let message = await userServices.checkQuery();
+    return res.status(200).json(message)
+}
+
 module.exports = {
     handleLogin: handleLogin,
     handleGetAllUser: handleGetAllUser,
@@ -93,4 +103,6 @@ module.exports = {
     handleDeleteUser: handleDeleteUser,
     handleCreateCoor: handleCreateCoor,
     handleGetAllCoor: handleGetAllCoor,
+    handleEditStatus: handleEditStatus,
+    handleQuery: handleQuery,
 }
