@@ -3,8 +3,11 @@ import res from "express/lib/response";
 import homecontroller from "../controller/homecontroller";
 import usercontroller from "../controller/usercontroller";
 import espcontroller from "../controller/espcontroller"
+import multer from "multer";
 
 let router = express.Router();
+let upload = multer({ dest: 'uploads/' });
+
 
 let initWebRoutes = (app) => {
     router.get('/', homecontroller.getHomePage);
@@ -37,6 +40,15 @@ let initWebRoutes = (app) => {
     router.post('/api/esp/post-coor', espcontroller.handlePostCoor);
     router.post('/api/esp/post-video', espcontroller.handlePostVideo);
     router.post('/api/esp/delete-coor', espcontroller.handleDeleteCoor);
+    router.get('/api/esp/round', espcontroller.handleGetRound);
+    router.get('/api/esp/test', espcontroller.handleTest);
+
+
+    //-----------------------------------------------------------------//
+
+
+    router.post('/api/esp/post-video', upload.single('video'), espcontroller.handlePostVideo);
+    router.get('/api/esp/get-video', espcontroller.handleGetVideo);
 
 
     return app.use("/", router);

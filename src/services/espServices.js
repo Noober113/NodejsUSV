@@ -32,6 +32,15 @@ let getAllCoor = (userId) => {
                     coor = 0
                 }
             }
+
+            if (userId === 'ROU') {
+                users = await db.Send.findAll({
+                    attributes: ['round']
+                })
+                if (users) {
+                    coor = users[0].round
+                }
+            }
             resolve(coor)
         } catch (e) {
             console.log(e)
@@ -64,8 +73,7 @@ let createCoor = (lat, lng) => {
 }
 
 let saveVideo = async (file) => {
-    const videoPath = path.join(__dirname, '..', 'uploads', file.originalname);
-    await writeFile(videoPath, file.buffer);
+
 }
 
 let deleteCoor = () => {
@@ -91,9 +99,41 @@ let deleteCoor = () => {
     })
 }
 
+let getAllRound = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let users = await db.Send.findAll({
+                attributes: ['round']
+            })
+            let all = users[0].round
+            resolve(all)
+        } catch (e) {
+            console.log(e)
+            // reject(e);
+        }
+    })
+}
+
+let testSend = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let users = await db.Send.findAll({
+                attributes: ['round']
+            })
+            let all = users[0].round
+            resolve(all)
+        } catch (e) {
+            console.log(e)
+            // reject(e);
+        }
+    })
+}
+
 module.exports = {
     getAllCoor: getAllCoor,
     createCoor: createCoor,
     saveVideo: saveVideo,
     deleteCoor: deleteCoor,
+    getAllRound: getAllRound,
+    testSend: testSend,
 }

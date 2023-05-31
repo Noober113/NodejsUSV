@@ -27,17 +27,18 @@ let handlePostCoor = async (req, res) => {
 }
 
 let handlePostVideo = async (req, res) => {
-    try {
-        const file = req.file;
-        if (!file) {
-            return res.status(400).send('No file uploaded');
-        }
-        await espServices.saveVideo(file);
-        res.send('File uploaded successfully');
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error uploading file');
+    if (!req.file) {
+        return res.status(400).json({ message: 'No file received' });
     }
+
+    // Access the uploaded video file using req.file
+    const videoPath = req.file.path;
+    espServices.saveVideo(videoPath);
+
+    // Send a response back to the ESP32-CAM
+    res.json({ message: 'Video uploaded successfully' });
+
+
 };
 
 let handleDeleteCoor = async (req, res) => {
@@ -45,9 +46,31 @@ let handleDeleteCoor = async (req, res) => {
     return res.status(200).json(message);
 };
 
+let handleGetVideo = async (req, res) => {
+    const { filename } = req.params;
+    const filePath = path.join(__dirname, 'uploads', filename);
+
+    res.render('view.ejs', { videoFile: filename });
+};
+
+let handleGetRound = async (req, res) => {
+    let users = await espServices.getAllRound();
+    // console.log(users)
+    return res.status(200).json(users)
+};
+
+let handleTest = async (req, res) => {
+    let users = await espServices.testSend();
+    // console.log(users)
+    return res.status(200).json(users)
+};
+
 module.exports = {
     handleGetCoor: handleGetCoor,
     handlePostCoor: handlePostCoor,
     handlePostVideo: handlePostVideo,
     handleDeleteCoor: handleDeleteCoor,
+    handleGetVideo: handleGetVideo,
+    handleGetRound: handleGetRound,
+    handleTest: handleTest,
 }
