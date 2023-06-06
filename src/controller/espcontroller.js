@@ -21,7 +21,7 @@ let handleGetCoor = async (req, res) => {
 }
 
 let handlePostCoor = async (req, res) => {
-    let message = await espServices.createCoor(req.query.lat, req.query.lng);
+    let message = await espServices.createCoor(req.query.lat, req.query.lng, req.query.distance_1, req.query.distance_2, req.query.distance_3, req.query.distance_4, req.query.cap180);
     let users = await espServices.getAllCoor('STT');
     return res.status(200).json(users);
 }
@@ -65,6 +65,12 @@ let handleTest = async (req, res) => {
     return res.status(200).json(users)
 };
 
+// let handleGetStart = async (req, res) => {
+//     let users = await espServices.getAllStart();
+//     // console.log(users)
+//     return res.status(200).json(users)
+// };
+
 module.exports = {
     handleGetCoor: handleGetCoor,
     handlePostCoor: handlePostCoor,
@@ -73,4 +79,5 @@ module.exports = {
     handleGetVideo: handleGetVideo,
     handleGetRound: handleGetRound,
     handleTest: handleTest,
+    // handleGetStart: handleGetStart,
 }

@@ -49,12 +49,17 @@ let getAllCoor = (userId) => {
     })
 }
 
-let createCoor = (lat, lng) => {
+let createCoor = (lat, lng, distance_1, distance_2, distance_3, distance_4, cap180) => {
     return new Promise(async (resolve, reject) => {
         try {
             await db.Receive.create({
                 latitude: lat,
                 longitude: lng,
+                speed: distance_1,
+                distance: distance_2,
+                status: distance_3,
+                status_rubbish: distance_4,
+                course: cap180
                 // value3: data.round === "1" ? true : false,
                 // start: data.start === "1" ? true : false,
                 // time: data.time,
@@ -129,6 +134,21 @@ let testSend = () => {
     })
 }
 
+// let getAllStart = () => {
+//     return new Promise(async (resolve, reject) => {
+//         try {
+//             let users = await db.Send.findAll({
+//                 attributes: ['start']
+//             })
+//             let all = users[0].round
+//             resolve(all)
+//         } catch (e) {
+//             console.log(e)
+//             // reject(e);
+//         }
+//     })
+// }
+
 module.exports = {
     getAllCoor: getAllCoor,
     createCoor: createCoor,
@@ -136,4 +156,5 @@ module.exports = {
     deleteCoor: deleteCoor,
     getAllRound: getAllRound,
     testSend: testSend,
+    // getAllStart: getAllStart,
 }

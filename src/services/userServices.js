@@ -237,7 +237,7 @@ let getAllCoor = () => {
             users = await db.Receive.findOne({
                 order: [['id', 'DESC']],
                 limit: 1,
-                attributes: ['latitude', 'longitude']
+                attributes: ['latitude', 'longitude', 'speed', 'course', 'distance', 'status', 'status_rubbish']
             })
             resolve(users)
         } catch (e) {
