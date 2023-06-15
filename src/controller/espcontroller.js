@@ -21,7 +21,7 @@ let handleGetCoor = async (req, res) => {
 }
 
 let handlePostCoor = async (req, res) => {
-    let message = await espServices.createCoor(req.query.lat, req.query.lng, req.query.distance_1, req.query.distance_2, req.query.distance_3, req.query.distance_4, req.query.cap180);
+    let message = await espServices.createCoor(req.query.lat, req.query.lng, req.query.distance_1, req.query.distance_2, req.query.distance_3, req.query.distance_4, req.query.cap180, req.query.distance, req.query.speed, req.query.j);
     let users = await espServices.getAllCoor('STT');
     return res.status(200).json(users);
 }

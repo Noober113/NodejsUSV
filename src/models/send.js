@@ -19,6 +19,11 @@ module.exports = (sequelize, DataTypes) => {
         round: DataTypes.BOOLEAN,
         start: DataTypes.BOOLEAN,
         time: DataTypes.DATE,
+        speed: DataTypes.STRING,
+        value_1: DataTypes.STRING,
+        value_2: DataTypes.STRING,
+        value_3: DataTypes.STRING,
+        value_4: DataTypes.STRING,
 
     }, {
         sequelize,

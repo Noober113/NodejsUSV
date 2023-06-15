@@ -49,17 +49,20 @@ let getAllCoor = (userId) => {
     })
 }
 
-let createCoor = (lat, lng, distance_1, distance_2, distance_3, distance_4, cap180) => {
+let createCoor = (lat, lng, distance_1, distance_2, distance_3, distance_4, cap180, distance, speed, j) => {
     return new Promise(async (resolve, reject) => {
         try {
             await db.Receive.create({
                 latitude: lat,
                 longitude: lng,
-                speed: distance_1,
-                distance: distance_2,
-                status: distance_3,
-                status_rubbish: distance_4,
-                course: cap180
+                value_1: distance_1,
+                value_2: distance_2,
+                value_3: distance_3,
+                value_4: distance_4,
+                course: cap180,
+                distance: distance,
+                speed: speed,
+                value_5: j,
                 // value3: data.round === "1" ? true : false,
                 // start: data.start === "1" ? true : false,
                 // time: data.time,
@@ -107,11 +110,15 @@ let deleteCoor = () => {
 let getAllRound = () => {
     return new Promise(async (resolve, reject) => {
         try {
-            let users = await db.Send.findAll({
+            let users = await db.Send.findOne({
+                order: [['id', 'DESC']],
                 attributes: ['round']
             })
-            let all = users[0].round
-            resolve(all)
+            let all = users.round
+            if (all) {
+                resolve(all)
+
+            }
         } catch (e) {
             console.log(e)
             // reject(e);

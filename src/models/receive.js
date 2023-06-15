@@ -23,6 +23,13 @@ module.exports = (sequelize, DataTypes) => {
         timeToStart: DataTypes.DATE,
         status: DataTypes.STRING,
         status_rubbish: DataTypes.STRING,
+        value_1: DataTypes.STRING,
+        value_2: DataTypes.STRING,
+        value_3: DataTypes.STRING,
+        value_4: DataTypes.STRING,
+        value_5: DataTypes.STRING,
+        value_6: DataTypes.STRING,
+        value_7: DataTypes.STRING,
 
     }, {
         sequelize,

@@ -23,6 +23,16 @@ module.exports = {
             },
             time: {
                 type: Sequelize.DATE
+            }, speed: {
+                type: Sequelize.STRING
+            }, value_1: {
+                type: Sequelize.STRING
+            }, value_2: {
+                type: Sequelize.STRING
+            }, value_3: {
+                type: Sequelize.STRING
+            }, value_4: {
+                type: Sequelize.STRING
             },
             createdAt: {
                 allowNull: false,

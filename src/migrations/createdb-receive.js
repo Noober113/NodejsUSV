@@ -47,6 +47,23 @@ module.exports = {
             status_rubbish: {
                 type: Sequelize.STRING
             },
+            status_rubbish: {
+                type: Sequelize.STRING
+            }, value_1: {
+                type: Sequelize.STRING
+            }, value_2: {
+                type: Sequelize.STRING
+            }, value_3: {
+                type: Sequelize.STRING
+            }, value_4: {
+                type: Sequelize.STRING
+            }, value_5: {
+                type: Sequelize.STRING
+            }, value_6: {
+                type: Sequelize.STRING
+            }, value_7: {
+                type: Sequelize.STRING
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE

@@ -211,12 +211,14 @@ let updateUserData = (data) => {
 let createCoor = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
+
             await db.Send.create({
                 latitude: data.lat,
                 longitude: data.lng,
                 // start: data.stt,
                 start: data.stt === "1" ? true : false,
-                round: data.round
+                round: data.round,
+                speed: 0,
                 // time: data.time,
             });
             resolve({
@@ -237,7 +239,7 @@ let getAllCoor = () => {
             users = await db.Receive.findOne({
                 order: [['id', 'DESC']],
                 limit: 1,
-                attributes: ['latitude', 'longitude', 'speed', 'course', 'distance', 'status', 'status_rubbish']
+                // attributes: ['latitude', 'longitude', 'speed', 'course', 'distance', 'status', 'status_rubbish']
             })
             resolve(users)
         } catch (e) {
@@ -280,7 +282,7 @@ let checkQuery = () => {
             })
             if (check) {
                 checkval = await db.Send.findAll({
-                    attributes: ['latitude', 'longitude', 'round', 'start']
+                    attributes: ['latitude', 'longitude', 'round', 'start', 'speed']
                 })
                 resolve({
                     checkval,
@@ -305,6 +307,29 @@ let checkQuery = () => {
     })
 }
 
+let updateSpeed = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await db.Send.update({ speed: data.sp }, { where: {} });
+            resolve({
+                errCode: 0,
+                errMessage: 'update success',
+            });
+
+            resolve({
+                errCode: 1,
+                errMessage: 'User not found',
+            });
+
+        } catch (e) {
+            // reject(e)
+            console.log(e)
+        }
+
+    })
+}
+
+
 module.exports = {
     handleUserLogin: handleUserLogin,
     getAllUser: getAllUser,
@@ -315,4 +340,5 @@ module.exports = {
     getAllCoor: getAllCoor,
     updateStatusData: updateStatusData,
     checkQuery: checkQuery,
+    updateSpeed: updateSpeed,
 }

@@ -18,6 +18,17 @@ module.exports = {
             value3: {
                 type: Sequelize.STRING
             },
+            value4: {
+                type: Sequelize.STRING
+            }, value5: {
+                type: Sequelize.STRING
+            }, value6: {
+                type: Sequelize.STRING
+            }, value7: {
+                type: Sequelize.STRING
+            }, value8: {
+                type: Sequelize.STRING
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE
