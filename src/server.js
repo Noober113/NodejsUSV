@@ -16,7 +16,7 @@ app.use(express.static('public'));
 //     // console.log('CORS-enabled web server listening on port 80')
 // })
 
-app.use(cors({ origin: 'http://192.168.216.239:3000', credentials: true }));
+app.use(cors({ origin: 'http://192.168.43.151:3000', credentials: true }));
 // app.use(helmet());
 
 // app.use(cors({ origin: "http://localhost:3000" }));
