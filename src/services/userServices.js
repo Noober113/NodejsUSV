@@ -221,6 +221,15 @@ let createCoor = (data) => {
                 speed: 0,
                 // time: data.time,
             });
+            await db.point_test.create({
+                value1: data.lat,
+                value2: data.lng,
+                // start: data.stt,
+                value3: data.stt,
+                value4: data.round,
+                value5: 0,
+                // time: data.time,
+            });
             resolve({
                 errCode: 0,
                 errMessage: 'ok',
@@ -310,7 +319,7 @@ let checkQuery = () => {
 let updateSpeed = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            await db.Send.update({ speed: data.sp }, { where: {} });
+            await db.Send.update({ round: data.sp }, { where: {} });
             resolve({
                 errCode: 0,
                 errMessage: 'update success',

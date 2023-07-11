@@ -30,7 +30,7 @@ let initWebRoutes = (app) => {
     router.post('/api/create-coor', usercontroller.handleCreateCoor);
     router.get('/api/get-coor', usercontroller.handleGetAllCoor);
     router.put('/api/edit-status', usercontroller.handleEditStatus);
-    router.put('/api/edit-speed', usercontroller.handleEditSpeed);
+    router.put('/api/edit-round', usercontroller.handleEditSpeed);
     router.get('/api/query-setting', usercontroller.handleQuery);
 
 
@@ -44,6 +44,7 @@ let initWebRoutes = (app) => {
     router.get('/api/esp/round', espcontroller.handleGetRound);
     router.get('/api/esp/test', espcontroller.handleTest);
     // router.get('/api/esp/start', espcontroller.handleGetStart);
+    router.get('/api/esp/get-distance', espcontroller.handleGetDistance);
 
 
     //-----------------------------------------------------------------//

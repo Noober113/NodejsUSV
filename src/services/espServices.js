@@ -1,6 +1,8 @@
 import e from "express";
 import res from "express/lib/response";
 import db from "../models/index";
+// import { getDistanceFromLine } from "geolib";
+const geolib = require('geolib');
 const { promisify } = require('util');
 const fs = require('fs');
 const writeFile = promisify(fs.writeFile);
@@ -34,11 +36,16 @@ let getAllCoor = (userId) => {
             }
 
             if (userId === 'ROU') {
-                users = await db.Send.findAll({
+                users = await db.Send.findOne({
+                    order: [['id', 'DESC']],
                     attributes: ['round']
                 })
-                if (users) {
-                    coor = users[0].round
+
+
+                if (users === null) {
+                    coor = 0
+                } else {
+                    coor = users.round
                 }
             }
             resolve(coor)
@@ -49,7 +56,7 @@ let getAllCoor = (userId) => {
     })
 }
 
-let createCoor = (lat, lng, distance_1, distance_2, distance_3, distance_4, cap180, distance, speed, j) => {
+let createCoor = (lat, lng, distance_1, distance_2, distance_3, distance_4, cap180, distance, speed, j, speed1) => {
     return new Promise(async (resolve, reject) => {
         try {
             await db.Receive.create({
@@ -63,6 +70,7 @@ let createCoor = (lat, lng, distance_1, distance_2, distance_3, distance_4, cap1
                 distance: distance,
                 speed: speed,
                 value_5: j,
+                value_6: speed1,
                 // value3: data.round === "1" ? true : false,
                 // start: data.start === "1" ? true : false,
                 // time: data.time,
@@ -114,11 +122,17 @@ let getAllRound = () => {
                 order: [['id', 'DESC']],
                 attributes: ['round']
             })
-            let all = users.round
-            if (all) {
-                resolve(all)
 
+            if (users === null) {
+                users = 0
+            } else {
+                users = users.round
             }
+
+
+            resolve(users)
+
+
         } catch (e) {
             console.log(e)
             // reject(e);
@@ -156,6 +170,34 @@ let testSend = () => {
 //     })
 // }
 
+let CalcDistance = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let lines = await db.Send.findAll({
+                attributes: ['latitude', 'longitude']
+            })
+            let point = await db.Receive.findOne({
+                order: [['id', 'DESC']],
+                attributes: ['latitude', 'longitude']
+            })
+            let minDistance = Infinity
+            for (let i = 0; i < lines.length - 1; i++) {
+                const start = { latitude: lines[i].latitude, longitude: lines[i].longitude };
+                const end = { latitude: lines[i + 1].latitude, longitude: lines[i + 1].longitude };
+                const distance = geolib.getDistanceFromLine(point, start, end, 0.00000000000000000000000000000001);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                }
+            }
+            resolve(minDistance)
+        } catch (e) {
+            // console.log(e)
+            reject(e);
+        }
+    })
+}
+
+
 module.exports = {
     getAllCoor: getAllCoor,
     createCoor: createCoor,
@@ -164,4 +206,5 @@ module.exports = {
     getAllRound: getAllRound,
     testSend: testSend,
     // getAllStart: getAllStart,
+    CalcDistance: CalcDistance,
 }

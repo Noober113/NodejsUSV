@@ -21,9 +21,11 @@ let handleGetCoor = async (req, res) => {
 }
 
 let handlePostCoor = async (req, res) => {
-    let message = await espServices.createCoor(req.query.lat, req.query.lng, req.query.distance_1, req.query.distance_2, req.query.distance_3, req.query.distance_4, req.query.cap180, req.query.distance, req.query.speed, req.query.j);
+    let message = await espServices.createCoor(req.query.lat, req.query.lng, req.query.distance_1, req.query.distance_2, req.query.distance_3, req.query.distance_4, req.query.cap180, req.query.distance, req.query.speed, req.query.j, req.query.speed1);
     let users = await espServices.getAllCoor('STT');
-    return res.status(200).json(users);
+    let users2 = await espServices.getAllCoor('ROU');
+    let users3 = users + '/' + users2
+    return res.status(200).send(users3);
 }
 
 let handlePostVideo = async (req, res) => {
@@ -71,6 +73,11 @@ let handleTest = async (req, res) => {
 //     return res.status(200).json(users)
 // };
 
+let handleGetDistance = async (req, res) => {
+    let message = await espServices.CalcDistance();
+    return res.status(200).json(message);
+}
+
 module.exports = {
     handleGetCoor: handleGetCoor,
     handlePostCoor: handlePostCoor,
@@ -80,4 +87,5 @@ module.exports = {
     handleGetRound: handleGetRound,
     handleTest: handleTest,
     // handleGetStart: handleGetStart,
+    handleGetDistance: handleGetDistance,
 }
