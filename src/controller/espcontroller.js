@@ -24,7 +24,8 @@ let handlePostCoor = async (req, res) => {
     let message = await espServices.createCoor(req.query.lat, req.query.lng, req.query.distance_1, req.query.distance_2, req.query.distance_3, req.query.distance_4, req.query.cap180, req.query.distance, req.query.speed, req.query.j, req.query.speed1);
     let users = await espServices.getAllCoor('STT');
     let users2 = await espServices.getAllCoor('ROU');
-    let users3 = users + '/' + users2
+    let users4 = await espServices.getAllCoor('SPE');
+    let users3 = users + '/' + users2 + '/' + users4
     return res.status(200).send(users3);
 }
 

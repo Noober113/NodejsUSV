@@ -30,7 +30,8 @@ let initWebRoutes = (app) => {
     router.post('/api/create-coor', usercontroller.handleCreateCoor);
     router.get('/api/get-coor', usercontroller.handleGetAllCoor);
     router.put('/api/edit-status', usercontroller.handleEditStatus);
-    router.put('/api/edit-round', usercontroller.handleEditSpeed);
+    router.put('/api/edit-round', usercontroller.handleEditRound);
+    router.put('/api/edit-speed', usercontroller.handleEditSpeed);
     router.get('/api/query-setting', usercontroller.handleQuery);
 
 

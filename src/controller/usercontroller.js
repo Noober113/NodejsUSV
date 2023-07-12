@@ -95,6 +95,11 @@ let handleQuery = async (req, res) => {
     return res.status(200).json(message)
 }
 
+let handleEditRound = async (req, res) => {
+    let message = await userServices.updateRound(req.body);
+    return res.status(200).json(message)
+}
+
 let handleEditSpeed = async (req, res) => {
     let message = await userServices.updateSpeed(req.body);
     return res.status(200).json(message)
@@ -110,5 +115,6 @@ module.exports = {
     handleGetAllCoor: handleGetAllCoor,
     handleEditStatus: handleEditStatus,
     handleQuery: handleQuery,
+    handleEditRound: handleEditRound,
     handleEditSpeed: handleEditSpeed,
 }

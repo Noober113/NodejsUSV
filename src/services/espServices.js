@@ -48,6 +48,21 @@ let getAllCoor = (userId) => {
                     coor = users.round
                 }
             }
+
+            if (userId === 'SPE') {
+                users = await db.Send.findOne({
+                    order: [['id', 'DESC']],
+                    attributes: ['speed']
+                })
+
+
+                if (users === null) {
+                    coor = 0
+                } else {
+                    coor = users.speed
+                }
+            }
+
             resolve(coor)
         } catch (e) {
             console.log(e)
@@ -120,7 +135,7 @@ let getAllRound = () => {
         try {
             let users = await db.Send.findOne({
                 order: [['id', 'DESC']],
-                attributes: ['round']
+                attributes: ['latitude']
             })
 
             if (users === null) {
