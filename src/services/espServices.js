@@ -89,6 +89,25 @@ let getAllCoor = (userId) => {
 let createCoor = (lat, lng, distance_1, distance_2, distance_3, distance_4, cap180, distance, speed, j, speed1) => {
     return new Promise(async (resolve, reject) => {
         try {
+
+            let lines = await db.Send.findAll({
+                attributes: ['latitude', 'longitude']
+                // where: { 'createAt'>= '165256660000' }
+            })
+            let point = await db.Receive.findOne({
+                order: [['id', 'DESC']],
+                attributes: ['latitude', 'longitude']
+            })
+            let minDistance = Infinity
+            for (let i = 0; i < lines.length - 1; i++) {
+                const start = { latitude: lines[i].latitude, longitude: lines[i].longitude };
+                const end = { latitude: lines[i + 1].latitude, longitude: lines[i + 1].longitude };
+                const distance = geolib.getDistanceFromLine(point, start, end, 0.00000000000000000000000000000001);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                }
+            }
+
             await db.Receive.create({
                 latitude: lat,
                 longitude: lng,
@@ -101,6 +120,7 @@ let createCoor = (lat, lng, distance_1, distance_2, distance_3, distance_4, cap1
                 speed: speed,
                 value_5: j,
                 value_6: speed1,
+                value_7: minDistance,
                 // value3: data.round === "1" ? true : false,
                 // start: data.start === "1" ? true : false,
                 // time: data.time,
