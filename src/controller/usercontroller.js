@@ -105,6 +105,11 @@ let handleEditSpeed = async (req, res) => {
     return res.status(200).json(message)
 }
 
+let handleEditSpeedF = async (req, res) => {
+    let message = await userServices.updateSpeedF(req.body);
+    return res.status(200).json(message)
+}
+
 module.exports = {
     handleLogin: handleLogin,
     handleGetAllUser: handleGetAllUser,
@@ -117,4 +122,5 @@ module.exports = {
     handleQuery: handleQuery,
     handleEditRound: handleEditRound,
     handleEditSpeed: handleEditSpeed,
+    handleEditSpeedF: handleEditSpeedF,
 }

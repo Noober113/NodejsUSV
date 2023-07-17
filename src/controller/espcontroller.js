@@ -25,7 +25,8 @@ let handlePostCoor = async (req, res) => {
     let users = await espServices.getAllCoor('STT');
     let users2 = await espServices.getAllCoor('ROU');
     let users4 = await espServices.getAllCoor('SPE');
-    let users3 = users + '/' + users2 + '/' + users4
+    let users5 = await espServices.getAllCoor('SPEF');
+    let users3 = users + '/' + users2 + '/' + users4 + '/' + users5
     return res.status(200).send(users3);
 }
 

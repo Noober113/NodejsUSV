@@ -32,6 +32,7 @@ let initWebRoutes = (app) => {
     router.put('/api/edit-status', usercontroller.handleEditStatus);
     router.put('/api/edit-round', usercontroller.handleEditRound);
     router.put('/api/edit-speed', usercontroller.handleEditSpeed);
+    router.put('/api/edit-speedF', usercontroller.handleEditSpeedF);
     router.get('/api/query-setting', usercontroller.handleQuery);
 
 

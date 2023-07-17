@@ -1,6 +1,7 @@
 import e from "express";
 import res from "express/lib/response";
 import db from "../models/index";
+import { where } from "sequelize";
 // import { getDistanceFromLine } from "geolib";
 const geolib = require('geolib');
 const { promisify } = require('util');
@@ -60,6 +61,20 @@ let getAllCoor = (userId) => {
                     coor = 0
                 } else {
                     coor = users.speed
+                }
+            }
+
+            if (userId === 'SPEF') {
+                users = await db.Send.findOne({
+                    order: [['id', 'DESC']],
+                    attributes: ['value_1']
+                })
+
+
+                if (users === null) {
+                    coor = 0
+                } else {
+                    coor = users.value_1
                 }
             }
 
@@ -190,6 +205,7 @@ let CalcDistance = () => {
         try {
             let lines = await db.Send.findAll({
                 attributes: ['latitude', 'longitude']
+                // where: { 'createAt'>= '165256660000' }
             })
             let point = await db.Receive.findOne({
                 order: [['id', 'DESC']],

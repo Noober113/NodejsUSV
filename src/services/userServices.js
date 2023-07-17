@@ -220,6 +220,7 @@ let createCoor = (data) => {
                 round: data.round,
                 speed: data.speed,
                 // time: data.time,
+                value_1: data.speedF,
             });
             await db.point_test.create({
                 value1: data.lat,
@@ -229,6 +230,7 @@ let createCoor = (data) => {
                 value4: data.round,
                 value5: data.speed,
                 // time: data.time,
+                value_1: data.speedF,
             });
             resolve({
                 errCode: 0,
@@ -291,7 +293,7 @@ let checkQuery = () => {
             })
             if (check) {
                 checkval = await db.Send.findAll({
-                    attributes: ['latitude', 'longitude', 'round', 'start', 'speed']
+                    attributes: ['latitude', 'longitude', 'round', 'start', 'speed', 'value_1']
                 })
                 resolve({
                     checkval,
@@ -360,6 +362,28 @@ let updateSpeed = (data) => {
     })
 }
 
+let updateSpeedF = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await db.Send.update({ value_1: data.sp }, { where: {} });
+            resolve({
+                errCode: 0,
+                errMessage: 'update success',
+            });
+
+            resolve({
+                errCode: 1,
+                errMessage: 'User not found',
+            });
+
+        } catch (e) {
+            // reject(e)
+            console.log(e)
+        }
+
+    })
+}
+
 module.exports = {
     handleUserLogin: handleUserLogin,
     getAllUser: getAllUser,
@@ -372,4 +396,5 @@ module.exports = {
     checkQuery: checkQuery,
     updateRound: updateRound,
     updateSpeed: updateSpeed,
+    updateSpeedF: updateSpeedF,
 }
